@@ -17,6 +17,14 @@ require('./index.css').toString();
  */
 class SimpleImage {
   /**
+   * Allow to press Enter inside the Alert block
+   * @public
+   * @returns {boolean}
+   */
+  static get enableLineBreaks() {
+    return true;
+  }
+  /**
    * Render plugin`s main Element and fill it with saved data
    *
    * @param {{data: SimpleImageData, config: object, api: object}}
@@ -369,6 +377,8 @@ class SimpleImage {
       }
     });
   }
+
+    
 }
 
 module.exports = SimpleImage;
