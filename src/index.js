@@ -54,7 +54,6 @@ class SimpleImage {
        */
       wrapper: 'cdx-simple-image',
       imageHolder: 'cdx-simple-image__picture',
-      caption: 'cdx-simple-image__caption'
     };
 
     /**
@@ -64,7 +63,6 @@ class SimpleImage {
       wrapper: null,
       imageHolder: null,
       image: null,
-      caption: null
     };
 
     /**
@@ -72,7 +70,6 @@ class SimpleImage {
      */
     this.data = {
       url: data.url || '',
-      caption: data.caption || '',
       withBorder: data.withBorder !== undefined ? data.withBorder : false,
       withBackground: data.withBackground !== undefined ? data.withBackground : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
@@ -128,25 +125,18 @@ class SimpleImage {
       loader = this._make('div', this.CSS.loading),
       imageHolder = this._make('div', this.CSS.imageHolder),
       image = this._make('img'),
-      caption = this._make('div', [this.CSS.input, this.CSS.caption], {
-        contentEditable: 'true',
-        innerHTML: this.data.caption || ''
-      });
 
     this.nodes.imageHolder = imageHolder;
     this.nodes.wrapper = wrapper;
     this.nodes.image = image;
-    this.nodes.caption = caption;
     this.nodes.loader = loader;
     this.nodes.loadButton = loadButton;
 
-    caption.dataset.placeholder = 'Enter a caption';
 
     image.onload = () => {
       wrapper.classList.remove(this.CSS.loading);
       imageHolder.appendChild(image);
       wrapper.appendChild(imageHolder);
-      wrapper.appendChild(caption);
       loader.remove();
 
       if (loadButton !== null) {
@@ -175,7 +165,6 @@ class SimpleImage {
         
         this.data = {
           url: url,
-          caption: file.name
         };
       
         loadButton.remove();
@@ -194,7 +183,6 @@ class SimpleImage {
    */
   save(blockContent) {
     let image = blockContent.querySelector('img'),
-      caption = blockContent.querySelector('.' + this.CSS.input);
 
     if (!image) {
       return this.data;
@@ -202,7 +190,6 @@ class SimpleImage {
 
     return Object.assign(this.data, {
       url: image.src,
-      caption: caption.innerHTML
     });
   }
 
@@ -215,9 +202,6 @@ class SimpleImage {
       withBorder: {},
       withBackground: {},
       stretched: {},
-      caption: {
-        br: true,
-      },
     };
   }
 
@@ -249,7 +233,6 @@ class SimpleImage {
         const { file } = event.detail;
         this.data = {
           url: URL.createObjectURL(file),
-          caption: file.name
         };
         break;
     }
@@ -278,9 +261,6 @@ class SimpleImage {
       this.nodes.image.src = this.data.url;
     }
 
-    if (this.nodes.caption) {
-      this.nodes.caption.innerHTML = this.data.caption;
-    }
   }
 
   /**
